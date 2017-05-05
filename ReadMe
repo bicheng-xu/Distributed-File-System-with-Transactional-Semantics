@@ -1,0 +1,21 @@
+The TCPServer program include following three java files
+- TCPServer.java
+- RequestHandler.java
+- TxnTable.java
+
+How to Run the TCPServer
+1. Run “sh build.sh" to compile the program.
+2. Run “sh run.sh <ipaddress> <port> <directory>" to run the program. No validation check for passed directory. as we assume you will pass in existing directory.
+
+How to Exit the TCPServer
+- Use Ctrl-C to exit the TCPServer, all the log files under the directory will be deleted.
+
+LOG Implementation:
+There are two sorts of log file
+- “.serverLog": record all transactions state before crash for server recovery. It will only be deleted when the Server exit using "Ctrl-C.
+
+- "." + transactionId: one log file for each transaction, record all details of each transaction for server recovery. It will be deleted after that transaction being committed or abortted. 
+
+
+TimeOut Implementation:
+30 seconds Timeout is implemented for each transaction for states including NEW_TXN, UNCOMMITTED, RESENDING. If the timer is expired, we assume that the client has crashed, the transaction will be aborted and the transaction detail log file will be deleted.  
